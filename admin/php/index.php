@@ -5,7 +5,6 @@ if (!isset($_SESSION['sessionid'])) {
     echo "<script> window.location.replace('login.php')</script>";
 }
 
-
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +25,8 @@ if (!isset($_SESSION['sessionid'])) {
     <!-- Sidebar -->
     <div class="w3-sidebar w3-bar-block" style="display:none" id="mySidebar">
         <button onclick="w3_close()" class="w3-bar-item w3-button w3-large">Close &times;</button>
-        <a href="#" class="w3-bar-item w3-button">My Products</a>
+        <a href="index.php" class="w3-bar-item w3-button">Dashboard</a>
+        <a href="products.php" class="w3-bar-item w3-button">My Products</a>
         <a href="#" class="w3-bar-item w3-button">Customer</a>
         <a href="#" class="w3-bar-item w3-button">Orders</a>
         <a href="#" class="w3-bar-item w3-button">Reports</a>

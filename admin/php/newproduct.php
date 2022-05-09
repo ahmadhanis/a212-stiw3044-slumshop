@@ -11,18 +11,21 @@ if (isset($_POST['submit'])) {
     $productQty = $_POST['productqty'];
     $prodcutPrice = $_POST['productprice'];
     $productBarcode = $_POST['productbarcode'];
+    $productType = $_POST['producttype'];
     $status = "available";
-    $sqlinsertproduct = "INSERT INTO `tbl_products`(`product_name`, `product_desc`, `product_qty`, `product_price`, `product_barcode`, `product_status`) VALUES ('$productName','$prouctDesc',$productQty,$prodcutPrice,'$productBarcode','$status')";
+    $sqlinsertproduct = "INSERT INTO `tbl_products`(`product_name`, `product_type`,`product_desc`, 
+    `product_qty`, `product_price`, `product_barcode`, `product_status`) VALUES 
+    ('$productName','$productType','$prouctDesc',$productQty,$prodcutPrice,'$productBarcode','$status')";
     try {
         $conn->exec($sqlinsertproduct);
         if (file_exists($_FILES["fileToUpload"]["tmp_name"]) || is_uploaded_file($_FILES["fileToUpload"]["tmp_name"])) {
             $last_id = $conn->lastInsertId();
             uploadImage($last_id);
-            echo "<script>alert('Insert success')</script>";
-            echo "<script>window.location.replace('index.php')</script>";
+            echo "<script>alert('Success')</script>";
+            echo "<script>window.location.replace('products.php')</script>";
         }
     } catch (PDOException $e) {
-        echo "<script>alert('Failed success')</script>";
+        echo "<script>alert('Failed')</script>";
         echo "<script>window.location.replace('newproduct.php')</script>";
     }
 }
@@ -83,10 +86,32 @@ function uploadImage($filename)
                 <input type="file" name="fileToUpload" onchange="previewFile()">
             </div>
             <hr>
-            <p>
-                <label><b>Product Name</b></label>
-                <input class="w3-input w3-border w3-round" name="productname" type="text" required>
-            </p>
+
+            <div class="w3-row">
+                <div class="w3-half" style="padding-right:4px">
+                    <p>
+                        <label><b>Product Name</b></label>
+                        <input class="w3-input w3-border w3-round" name="productname" type="text" required>
+                    </p>
+                </div>
+                <div class="w3-half" style="padding-right:4px">
+                    <p>
+                        <label><b>Product Type</b></label>
+                        <select class="w3-select w3-border w3-round" name="producttype">
+                            <option value="Bread">Bread</option>
+                            <option value="Beverage">Beverage</option>
+                            <option value="Condiment">Condiment</option>
+                            <option value="Care Product">Care Product</option>
+                            <option value="Canned Food">Canned Food</option>
+                            <option value="Dairy">Dairy</option>
+                            <option value="Dried Food">Dried Food</option>
+                            <option value="Meat">Meat</option>
+                            <option value="Snack">Snack</option>
+                            <option value="Household">Household</option>
+                        </select>
+                    </p>
+                </div>
+            </div>
             <p>
                 <label><b>Description</b></label>
                 <textarea class="w3-input w3-border w3-round" rows="4" width="100%" name="description" required></textarea>
@@ -107,7 +132,7 @@ function uploadImage($filename)
                 <div class="w3-third">
                     <p>
                         <label><b>Product Barcode</b></label>
-                        <input class="w3-input w3-border w3-round" name="productbarcode" type="number" maxlength="12" required>
+                        <input class="w3-input w3-border w3-round" name="productbarcode" type="text" maxlength="12" required>
                     </p>
                 </div>
                 <p>

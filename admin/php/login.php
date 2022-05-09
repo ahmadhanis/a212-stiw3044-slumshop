@@ -74,7 +74,7 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
     </div>
-    <footer class="w3-footer w3-center w3-yellow">
+    <footer class="w3-footer w3-center w3-yellow w3-bottom">
         <p>SLumShop</p>
     </footer>
 
