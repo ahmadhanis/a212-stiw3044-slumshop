@@ -12,8 +12,9 @@ $qty = $_POST['qty'];
 $barcode = $_POST['barcode'];
 $type = $_POST['type'];
 $base64image = $_POST['image'];
-
-$sqlinsert = "INSERT INTO `tbl_products`(`product_name`, `product_desc`, `product_category`, `product_qty`, `product_price`, `product_barcode`) VALUES ('$name','$desc','$type',$qty,$price,'$barcode')";
+$status = "available";
+$sqlinsert = "INSERT INTO `tbl_products`(`product_name`, `product_desc`, `product_type`, `product_qty`, 
+`product_price`, `product_barcode`,`product_status`) VALUES ('$name','$desc','$type',$qty,$price,'$barcode','$status')";
 if ($conn->query($sqlinsert) === TRUE) {
     $response = array('status' => 'success', 'data' => null);
     $filename = mysqli_insert_id($conn);
