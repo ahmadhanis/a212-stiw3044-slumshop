@@ -6,19 +6,28 @@ if (!isset($_SESSION['sessionid'])) {
 }
 include_once("dbconnect.php");
 
-if (isset($_GET['submit'])){
+if (isset($_GET['submit'])) {
     $operation = $_GET['submit'];
-    if ($operation =='delete'){
+    if ($operation == 'delete') {
         $prid = $_GET['prid'];
         $sqldeletepr = "DELETE FROM `tbl_products` WHERE product_id = '$prid'";
         $conn->exec($sqldeletepr);
         echo "<script>alert('Product deleted')</script>";
-    }else{
-        echo "<script>alert('Failed')</script>";
+    }
+    if ($operation == 'search') {
+        $search = $_GET['search'];
+        $option = $_GET['option'];
+        if ($option == "Select"){
+            $sqlproduct = "SELECT * FROM tbl_products WHERE product_name LIKE '%$search%'";
+        }else{
+            $sqlproduct = "SELECT * FROM tbl_products WHERE product_type = '$option'";
+        }
     }
 }
 
-$sqlproduct = "SELECT * FROM tbl_products";
+if (!isset($sqlproduct)) {
+    $sqlproduct = "SELECT * FROM tbl_products";
+}
 $stmt = $conn->prepare($sqlproduct);
 $stmt->execute();
 $rows = $stmt->fetchAll();
@@ -60,6 +69,34 @@ $rows = $stmt->fetchAll();
     <div class="w3-bar w3-yellow">
         <a href="newproduct.php" class="w3-bar-item w3-button w3-right">New Product</a>
     </div>
+    <div class="w3-card w3-container w3-padding w3-margin w3-round">
+        <h3>Product Search</h3>
+        <form>
+            <div class="w3-row">
+                <div class="w3-half" style="padding-right:4px">
+                    <p><input class="w3-input w3-block w3-round w3-border" type="search" name="search" placeholder="Enter search term" /></p>
+                </div>
+                <div class="w3-half" style="padding-right:4px">
+                    <p> <select class="w3-input w3-block w3-round w3-border" name="option">
+                            <option value="Select" selected>Select</option>
+                            <option value="Bread">Bread</option>
+                            <option value="Beverage">Beverage</option>
+                            <option value="Condiment">Condiment</option>
+                            <option value="Care Product">Care Product</option>
+                            <option value="Canned Food">Canned Food</option>
+                            <option value="Dairy">Dairy</option>
+                            <option value="Dried Food">Dried Food</option>
+                            <option value="Meat">Meat</option>
+                            <option value="Snack">Snack</option>
+                            <option value="Household">Household</option>F
+                        </select>
+                    </p>
+                </div>
+            </div>
+            <button class="w3-button w3-yellow w3-round w3-right" type="submit" name="submit" value="search">search</button>
+        </form>
+
+    </div>
     <div class="w3-margin w3-border" style="overflow-x:auto;">
         <?php
         $i = 0;
@@ -72,7 +109,7 @@ $rows = $stmt->fetchAll();
             $prdesc = $products['product_desc'];
             $prtype = $products['product_type'];
             $prqty = $products['product_qty'];
-            $prprice = number_format((float)$products['product_price'], 2, '.', '');// $products['product_price'];
+            $prprice = number_format((float)$products['product_price'], 2, '.', ''); // $products['product_price'];
             $prbc = $products['product_barcode'];
             $prdate = $products['product_date'];
             $prst = $products['product_status'];

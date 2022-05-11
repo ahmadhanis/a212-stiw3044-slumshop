@@ -74,7 +74,7 @@ function uploadImage($filename)
         </div>
     </div>
     <div class="w3-bar w3-yellow">
-        <a href="logout.php" class="w3-bar-item w3-button w3-right">Logout</a>
+        <a href="products.php" class="w3-bar-item w3-button w3-right">Back</a>
     </div>
     <div class="w3-content w3-padding-32">
         <form class="w3-card w3-padding" action="newproduct.php" method="post" enctype="multipart/form-data" onsubmit="return confirm('Are you sure?')">
