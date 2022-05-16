@@ -5,6 +5,7 @@ if (!isset($_POST)) {
     die();
 }
 include_once("dbconnect.php");
+
 $sqlloadproduct = "SELECT * FROM tbl_products";
 $result = $conn->query($sqlloadproduct);
 if ($result->num_rows > 0) {
