@@ -1,11 +1,5 @@
 <?php
-session_start();
-if (!isset($_SESSION['sessionid'])) {
-    echo "<script>alert('Session not available. Please login');</script>";
-    echo "<script> window.location.replace('login.php')</script>";
-}
 include_once("dbconnect.php");
-
 if (isset($_GET['submit'])) {
     $operation = $_GET['submit'];
     if ($operation == 'delete') {
@@ -27,12 +21,12 @@ if (isset($_GET['submit'])) {
     $sqlproduct = "SELECT * FROM tbl_products";
 }
 
-$results_per_page = 20;
+$results_per_page = 10;
 if (isset($_GET['pageno'])) {
-     $pageno = (int)$_GET['pageno'];
+    $pageno = (int)$_GET['pageno'];
     $page_first_result = ($pageno - 1) * $results_per_page;
 } else {
-     $pageno = 1;
+    $pageno = 1;
     $page_first_result = 0;
 }
 
@@ -112,52 +106,50 @@ $rows = $stmt->fetchAll();
         </form>
 
     </div>
-    <div class="w3-margin w3-border" style="overflow-x:auto;">
+    <div class="w3-margin w3-grid-template">
         <?php
         $i = 0;
-        echo "<table class='w3-table w3-striped w3-bordered' style='width:100%'>
-         <tr><th style='width:5%'>No</th><th style='width:30%'>Product Name</th><th style='width:10%'>Type</th><th style='width:10%'>Quantity</th><th style='width:10%'>Price</th><th>Status</th><th>Operations</th></tr>";
         foreach ($rows as $products) {
             $i++;
             $prid = $products['product_id'];
             $prname = $products['product_name'];
-            $prdesc = $products['product_desc'];
             $prtype = $products['product_type'];
             $prqty = $products['product_qty'];
             $prprice = number_format((float)$products['product_price'], 2, '.', ''); // $products['product_price'];
-            $prbc = $products['product_barcode'];
-            $prdate = $products['product_date'];
             $prst = $products['product_status'];
-            echo "<tr><td>$i</td><td>$prname</td><td>$prtype</td><td>$prqty</td><td>RM $prprice</td><td>$prst</td>
-            <td><button class='btn'><a href='products.php?submit=delete&prid=$prid' class='fa fa-trash' onclick=\"return confirm('Are you sure?')\"></a></button>
-            <button class='btn'><a href='updateproduct.php?submit=details&prid=$prid' class='fa fa-edit'></a></button></td></tr>";
+            echo "<div class='w3-card-4 w3-dark-grey w3-margin w3-round'>
+            <header class='w3-container w3-blue'>$prname</header>";
+            echo "<img class='w3-image' src=../../admin/res/products/$prid.png" .
+                " onerror=this.onerror=null;this.src='../../admin/res/newproduct.png'"
+                . " style='width:100%;height:250px'>";
+            echo "<p>$prtype</p>
+            </div>";
         }
-        echo "</table>";
         ?>
     </div>
     <br>
     <?php
+    $num = 1;
+    if ($pageno == 1) {
         $num = 1;
-        if ($pageno == 1) {
-            $num = 1;
-        } else if ($pageno == 2) {
-            $num = ($num) + 10;
-        } else {
-            $num = $pageno * 10 - 9;
-        }
-        echo "<div class='w3-container w3-row'>";
-        echo "<center>";
-        for ($page = 1; $page <= $number_of_page; $page++) {
-            echo '<a href = "products.php?pageno=' . $page . '" style=
+    } else if ($pageno == 2) {
+        $num = ($num) + 10;
+    } else {
+        $num = $pageno * 10 - 9;
+    }
+    echo "<div class='w3-container w3-row'>";
+    echo "<center>";
+    for ($page = 1; $page <= $number_of_page; $page++) {
+        echo '<a href = "index.php?pageno=' . $page . '" style=
             "text-decoration: none">&nbsp&nbsp' . $page . ' </a>';
-        }
-        echo " ( " . $pageno . " )";
-        echo "</center>";
-        echo "</div>";
+    }
+    echo " ( " . $pageno . " )";
+    echo "</center>";
+    echo "</div>";
     ?>
     <br>
 
-<footer class="w3-footer w3-center w3-bottom w3-yellow">Slumshop</footer>
+    <footer class="w3-footer w3-center w3-bottom w3-yellow">Slumshop</footer>
 
 </body>
 
