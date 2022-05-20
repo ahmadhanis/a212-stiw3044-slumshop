@@ -5,8 +5,15 @@ if (!isset($_POST)) {
     die();
 }
 include_once("dbconnect.php");
+$results_per_page = 5;
+$pageno = (int)$_POST['pageno'];
+$page_first_result = ($pageno - 1) * $results_per_page;
 
 $sqlloadproduct = "SELECT * FROM tbl_products";
+$result = $conn->query($sqlloadproduct);
+$number_of_result = $result->num_rows;
+$number_of_page = ceil($number_of_result / $results_per_page);
+$sqlloadproduct = $sqlloadproduct . " LIMIT $page_first_result , $results_per_page";
 $result = $conn->query($sqlloadproduct);
 if ($result->num_rows > 0) {
     //do something
@@ -24,10 +31,10 @@ if ($result->num_rows > 0) {
         $prlist['product_date'] = $row['product_date'];
         array_push($products["products"],$prlist);
     }
-    $response = array('status' => 'success', 'data' => $products);
+    $response = array('status' => 'success', 'pageno'=>"$pageno",'numofpage'=>"$number_of_page", 'data' => $products);
     sendJsonResponse($response);
 } else {
-    $response = array('status' => 'failed', 'data' => null);
+    $response = array('status' => 'failed', 'pageno'=>"$pageno",'numofpage'=>"$number_of_page",'data' => null);
     sendJsonResponse($response);
 }
 
