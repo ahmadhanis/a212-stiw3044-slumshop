@@ -5,11 +5,13 @@ if (!isset($_POST)) {
     die();
 }
 include_once("dbconnect.php");
-$results_per_page = 5;
+$results_per_page = 10;
 $pageno = (int)$_POST['pageno'];
+$search = $_POST['search'];
+
 $page_first_result = ($pageno - 1) * $results_per_page;
 
-$sqlloadproduct = "SELECT * FROM tbl_products";
+$sqlloadproduct = "SELECT * FROM tbl_products WHERE product_name LIKE '%$search%'";
 $result = $conn->query($sqlloadproduct);
 $number_of_result = $result->num_rows;
 $number_of_page = ceil($number_of_result / $results_per_page);
