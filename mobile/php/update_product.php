@@ -22,7 +22,7 @@ if ($conn->query($sqlupdate) === TRUE) {
     $response = array('status' => 'success', 'data' => null);
     if ($base64image !="na"){
         $decoded_string = base64_decode($base64image);
-        $path = '../assets/products/' . $filename . '.jpg';
+        $path = '../../assets/products/' . $filename . '.jpg';
         $is_written = file_put_contents($path, $decoded_string);
     }  
     sendJsonResponse($response);

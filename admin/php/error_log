@@ -1,0 +1,4 @@
+[28-May-2022 23:28:38 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_stmt::fetchColumn() in /home/slumber6/public_html/slumshop/admin/php/login.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/slumber6/public_html/slumshop/admin/php/login.php on line 10

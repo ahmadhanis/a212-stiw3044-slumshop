@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
 
 function uploadImage($filename)
 {
-    $target_dir = "../res/products/";
+    $target_dir = "../../assets/products/";
     $target_file = $target_dir . $filename . ".png";
     move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
 }
@@ -98,16 +98,25 @@ function uploadImage($filename)
                     <p>
                         <label><b>Product Type</b></label>
                         <select class="w3-select w3-border w3-round" name="producttype">
+                            <option value="Baby">Baby</option>
                             <option value="Bread">Bread</option>
                             <option value="Beverage">Beverage</option>
+                            <option value="Breakfast">Breakfast</option>
                             <option value="Condiment">Condiment</option>
                             <option value="Care Product">Care Product</option>
                             <option value="Canned Food">Canned Food</option>
                             <option value="Dairy">Dairy</option>
                             <option value="Dried Food">Dried Food</option>
+                            <option value="Grain">Grain</option>
+                            <option value="Frozen">Frozen</option>
+                            <option value="Health">Health</option>
                             <option value="Meat">Meat</option>
+                            <option value="Miscellanaeous">Miscellanaeous</option>
                             <option value="Snack">Snack</option>
+                            <option value="Pet">Pet</option>
+                            <option value="Produce">Produce</option>
                             <option value="Household">Household</option>
+                            <option value="Beverage">Vegetables</option>
                         </select>
                     </p>
                 </div>
