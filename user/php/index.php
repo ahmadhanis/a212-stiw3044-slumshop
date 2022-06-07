@@ -213,8 +213,6 @@ function truncate($string, $length, $dots = "...") {
 			    alert("Please login/register account");
 			    window.location.replace('login.php');
 			}
-			
-
 		}
 	});
 }

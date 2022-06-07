@@ -26,6 +26,16 @@ if ($numrow > 0) {
         $customer['otp'] = $row['customer_otp'];
         $customer['datereg'] = $row['customer_datereg'];
     }
+    $sqlgetqty = "SELECT * FROM tbl_carts WHERE customer_email = '$email'";
+    $result = $conn->query($sqlgetqty);
+    $number_of_result = $result->num_rows;
+    $carttotal = 0;
+    while($row = $result->fetch_assoc()) {
+        $carttotal = $row['cart_qty'] + $carttotal;
+    }
+    $mycart = array();
+    $customer['cart'] =$carttotal;
+
     $response = array('status' => 'success', 'data' => $customer);
     sendJsonResponse($response);
 } else {

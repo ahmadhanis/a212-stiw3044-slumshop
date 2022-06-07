@@ -8,10 +8,16 @@ include_once("dbconnect.php");
 $results_per_page = 20;
 $pageno = (int)$_POST['pageno'];
 $search = $_POST['search'];
+$type = $_POST['type'];
 
 $page_first_result = ($pageno - 1) * $results_per_page;
 
-$sqlloadproduct = "SELECT * FROM tbl_products WHERE product_name LIKE '%$search%' ORDER BY product_id DESC";
+if ($type=="All"){
+    $sqlloadproduct = "SELECT * FROM tbl_products WHERE product_name LIKE '%$search%' ORDER BY product_id DESC";
+}else{
+    $sqlloadproduct = "SELECT * FROM tbl_products WHERE product_name LIKE '%$search%' AND product_type = '$type' ORDER BY product_id DESC";    
+}
+
 $result = $conn->query($sqlloadproduct);
 $number_of_result = $result->num_rows;
 $number_of_page = ceil($number_of_result / $results_per_page);

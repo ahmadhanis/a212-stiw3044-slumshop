@@ -85,7 +85,7 @@ $rows = $stmt->fetchAll();
             echo "<a href='productdetails.php?prid=$prid' style='text-decoration: none;'> <img class='w3-image' src=../../assets/products/$prid.jpg" .
                 " onerror=this.onerror=null;this.src='../../admin/res/newproduct.jpg'"
                 . " style='width:100%;height:250px'></a><hr>";
-                 echo "<div class='w3-container'><p>Price: RM $prpricesingle<br>Quantity: $cartqty/$prqty available<br><label id='totalid_$cartid'> Total Price: RM $price</label><br>
+                 echo "<div class='w3-container'><p>Price: RM $prpricesingle<br>Quantity: <label id='cartquan_$cartid'> $cartqty</label>/$prqty available<br><label id='totalid_$cartid'> Total Price: RM $price</label><br>
                    <div class='w3-center'><input type='button' class='w3-button w3-red' id='button_id' value='-' onClick='updateCart($cartid,\"remove\");'>
                     <label id='qtyid_$cartid'>$cartqty</label>
                     <input type='button' class='w3-button w3-green' id='button_id' value='+' onClick='updateCart($cartid,\"insert\");'>
@@ -126,6 +126,7 @@ $rows = $stmt->fetchAll();
 			if (res.status == "success") {
 			    console.log(res.data.item_qty);
 			    document.getElementById("qtyid_" + cartid).innerHTML = res.data.item_qty;
+			    document.getElementById("cartquan_" + cartid).innerHTML = res.data.item_qty;
 			    document.getElementById("payableid").innerHTML = res.data.payable.toFixed(2);
 			    document.getElementById("totalid_"+ cartid).innerHTML = "Total Price: RM "+res.data.item_price.toFixed(2);
 				//alert("Success");
