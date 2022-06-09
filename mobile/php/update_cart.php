@@ -18,9 +18,9 @@ if ($op =="-"){
 }
 
 if ($conn->query($updatecart)){
-    $response = array('status' => 'success', 'data' => $updatecart);    
+    $response = array('status' => 'success', 'data' => null);    
 }else{
-    $response = array('status' => 'failed', 'data' => $updatecart);
+    $response = array('status' => 'failed', 'data' => null);
 }
 
 sendJsonResponse($response);

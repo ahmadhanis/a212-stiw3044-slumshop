@@ -10,7 +10,7 @@ $prid = $_POST['prid'];
 $useremail = $_POST['email'];
 $cartqty = "1";
 $carttotal = 0;
-$sqlinsert = "SELECT * FROM tbl_carts WHERE customer_email = '$useremail' AND product_id = '$prid'";
+$sqlinsert = "SELECT * FROM tbl_carts WHERE customer_email = '$useremail' AND product_id = '$prid' AND cart_status IS NULL";
 $result = $conn->query($sqlinsert);
 $number_of_result = $result->num_rows;
 
@@ -19,18 +19,14 @@ if ($number_of_result > 0) {
 	    $cartqty = $row['cart_qty'];
 	}
 	$cartqty = $cartqty + 1;
-	$updatecart = "UPDATE `tbl_carts` SET `cart_qty`= '$cartqty' WHERE customer_email = '$useremail' AND product_id = '$prid'";
+	$updatecart = "UPDATE `tbl_carts` SET `cart_qty`= '$cartqty' WHERE customer_email = '$useremail' AND product_id = '$prid' AND cart_status IS NULL";
 	$conn->query($updatecart);
-// 	$response = array('status' => 'success', 'data' => null);
-// 	sendJsonResponse($response);
 } 
 else 
 {
     $addcart = "INSERT INTO `tbl_carts`(`customer_email`, `product_id`, `cart_qty`) VALUES ('$useremail','$prid','$cartqty')";
     if ($conn->query($addcart) === TRUE) {
-//         $response = array('status' => 'success', 'data' => null);
-// 		sendJsonResponse($response);
-// 		return;
+
 	}else{
 	    $response = array('status' => 'failed', 'data' => null);
 		sendJsonResponse($response);
@@ -38,7 +34,7 @@ else
     }
 }
 
-$sqlgetqty = "SELECT * FROM tbl_carts WHERE customer_email = '$useremail'";
+$sqlgetqty = "SELECT * FROM tbl_carts WHERE customer_email = '$useremail' AND cart_status IS NULL";
 $result = $conn->query($sqlgetqty);
 $number_of_result = $result->num_rows;
 $carttotal = 0;

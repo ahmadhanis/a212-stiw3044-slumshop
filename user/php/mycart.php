@@ -15,7 +15,7 @@ if (isset($_SESSION['email'])) {
 
 include_once("dbconnect.php");
 $sqlcart = "SELECT tbl_carts.cart_id, tbl_carts.product_id, tbl_carts.cart_qty, tbl_products.product_name, tbl_products.product_price, tbl_products.product_qty FROM tbl_carts 
-INNER JOIN tbl_products ON tbl_carts.product_id = tbl_products.product_id WHERE tbl_carts.customer_email = '$user_email'";
+INNER JOIN tbl_products ON tbl_carts.product_id = tbl_products.product_id WHERE tbl_carts.customer_email = '$user_email' AND tbl_carts.cart_status IS NULL";
 $stmt = $conn -> prepare($sqlcart);
 $stmt->execute();
 $number_of_result = $stmt->rowCount();

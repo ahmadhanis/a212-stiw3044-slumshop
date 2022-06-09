@@ -19,7 +19,7 @@ if ($_GET['submit'] == "add") {
 		$prid = $_GET['productid'];
 		$cartqty = "1";
 		$carttotal = 0;
-		$stmt = $conn -> prepare("SELECT * FROM tbl_carts WHERE customer_email = '$useremail' AND product_id = '$prid'");
+		$stmt = $conn -> prepare("SELECT * FROM tbl_carts WHERE customer_email = '$useremail' AND product_id = '$prid' AND cart_status IS NULL");
 		$stmt -> execute();
 		$number_of_rows = $stmt -> rowCount();
 		$result = $stmt -> setFetchMode(PDO::FETCH_ASSOC);
@@ -29,7 +29,7 @@ if ($_GET['submit'] == "add") {
 				$cartqty = $carts['cart_qty'];
 			}
 			$cartqty = $cartqty + 1;
-			$updatecart = "UPDATE `tbl_carts` SET `cart_qty`= '$cartqty' WHERE customer_email = '$useremail' AND product_id = '$prid'";
+			$updatecart = "UPDATE `tbl_carts` SET `cart_qty`= '$cartqty' WHERE customer_email = '$useremail' AND product_id = '$prid' AND cart_status IS NULL";
 			$conn -> exec($updatecart);
 
 		} else {
@@ -43,7 +43,7 @@ if ($_GET['submit'] == "add") {
 				return;
 			}
 		}
-		$stmtqty = $conn -> prepare("SELECT * FROM tbl_carts WHERE customer_email = '$useremail'");
+		$stmtqty = $conn -> prepare("SELECT * FROM tbl_carts WHERE customer_email = '$useremail' AND cart_status IS NULL");
 		$stmtqty -> execute();
 		$resultqty = $stmtqty -> setFetchMode(PDO::FETCH_ASSOC);
 		$rowsqty = $stmtqty -> fetchAll();
@@ -64,7 +64,7 @@ if ($_GET['submit'] == "insert") {
         $sqladditem = "UPDATE tbl_carts set cart_qty = (cart_qty+1) WHERE cart_id = $cartid";
         $stm = $conn -> prepare($sqladditem);
         $stm -> execute();
-        $sqlgetqty = "SELECT tbl_carts.cart_qty, tbl_products.product_price FROM tbl_carts INNER JOIN tbl_products ON tbl_carts.product_id = tbl_products.product_id WHERE tbl_carts.cart_id = '$cartid'";
+        $sqlgetqty = "SELECT tbl_carts.cart_qty, tbl_products.product_price FROM tbl_carts INNER JOIN tbl_products ON tbl_carts.product_id = tbl_products.product_id WHERE tbl_carts.cart_id = '$cartid' AND tbl_carts.cart_status IS NULL";
        	$stmtqty = $conn -> prepare($sqlgetqty);
        	$stmtqty -> execute();
 		$resultqty = $stmtqty -> setFetchMode(PDO::FETCH_ASSOC);
@@ -80,7 +80,7 @@ if ($_GET['submit'] == "insert") {
 		$mycart['item_qty'] =$qty;
 		$mycart['item_price'] =$itemprice;
 		
-		$sqlcart = "SELECT tbl_carts.product_id, tbl_carts.cart_qty, tbl_products.product_price,tbl_products.product_id FROM tbl_carts INNER JOIN tbl_products ON tbl_carts.product_id = tbl_products.product_id WHERE tbl_carts.customer_email = '$useremail'";
+		$sqlcart = "SELECT tbl_carts.product_id, tbl_carts.cart_qty, tbl_products.product_price,tbl_products.product_id FROM tbl_carts INNER JOIN tbl_products ON tbl_carts.product_id = tbl_products.product_id WHERE tbl_carts.customer_email = '$useremail' AND tbl_carts.cart_status IS NULL";
 		$stmt = $conn -> prepare($sqlcart);
        	$stmt -> execute();
 		$resultqty = $stmt -> setFetchMode(PDO::FETCH_ASSOC);
@@ -108,7 +108,7 @@ if ($_GET['submit'] == "remove") {
         $sqlremoveitem = "UPDATE tbl_carts set cart_qty = if(cart_qty>1,(cart_qty-1),cart_qty) WHERE cart_id = $cartid";
         $stm = $conn -> prepare($sqlremoveitem);
         $stm -> execute();
-       	$sqlgetqty = "SELECT tbl_carts.cart_qty, tbl_products.product_price FROM tbl_carts INNER JOIN tbl_products ON tbl_carts.product_id = tbl_products.product_id WHERE tbl_carts.cart_id = '$cartid'";
+       	$sqlgetqty = "SELECT tbl_carts.cart_qty, tbl_products.product_price FROM tbl_carts INNER JOIN tbl_products ON tbl_carts.product_id = tbl_products.product_id WHERE tbl_carts.cart_id = '$cartid' AND tbl_carts.cart_status IS NULL";
        	$stmtqty = $conn -> prepare($sqlgetqty);
        	$stmtqty -> execute();
 		$resultqty = $stmtqty -> setFetchMode(PDO::FETCH_ASSOC);
@@ -123,7 +123,7 @@ if ($_GET['submit'] == "remove") {
 		$mycart['item_qty'] =$qty;
 		$mycart['item_price'] =$itemprice;
 		
-		$sqlcart = "SELECT tbl_carts.product_id, tbl_carts.cart_qty, tbl_products.product_price,tbl_products.product_id FROM tbl_carts INNER JOIN tbl_products ON tbl_carts.product_id = tbl_products.product_id WHERE tbl_carts.customer_email = '$useremail'";
+		$sqlcart = "SELECT tbl_carts.product_id, tbl_carts.cart_qty, tbl_products.product_price,tbl_products.product_id FROM tbl_carts INNER JOIN tbl_products ON tbl_carts.product_id = tbl_products.product_id WHERE tbl_carts.customer_email = '$useremail' AND tbl_carts.cart_status IS NULL";
 		$stmt = $conn -> prepare($sqlcart);
        	$stmt -> execute();
 		$resultqty = $stmt -> setFetchMode(PDO::FETCH_ASSOC);
@@ -150,7 +150,7 @@ if ($_GET['submit'] == "delete") {
         $sqldelete = "DELETE FROM tbl_carts WHERE cart_id = $cartid";
         $stm = $conn -> prepare($sqldelete);
         $stm -> execute();
-        $sqlcart = "SELECT tbl_carts.product_id, tbl_carts.cart_qty, tbl_products.product_price,tbl_products.product_id FROM tbl_carts INNER JOIN tbl_products ON tbl_carts.product_id = tbl_products.product_id WHERE tbl_carts.customer_email = '$useremail'";
+        $sqlcart = "SELECT tbl_carts.product_id, tbl_carts.cart_qty, tbl_products.product_price,tbl_products.product_id FROM tbl_carts INNER JOIN tbl_products ON tbl_carts.product_id = tbl_products.product_id WHERE tbl_carts.customer_email = '$useremail' AND tbl_carts.cart_status IS NULL";
 		$stmt = $conn -> prepare($sqlcart);
        	$stmt -> execute();
 		$resultqty = $stmt -> setFetchMode(PDO::FETCH_ASSOC);

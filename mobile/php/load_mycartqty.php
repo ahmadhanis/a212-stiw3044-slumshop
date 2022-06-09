@@ -7,7 +7,7 @@ if (!isset($_POST)) {
 
 include_once("dbconnect.php");
 $useremail = $_POST['email'];
-$sqlgetqty = "SELECT * FROM tbl_carts WHERE customer_email = '$useremail'";
+$sqlgetqty = "SELECT * FROM tbl_carts WHERE customer_email = '$useremail' and cart_status IS NULL";
 $result = $conn->query($sqlgetqty);
 $number_of_result = $result->num_rows;
 $carttotal = 0;

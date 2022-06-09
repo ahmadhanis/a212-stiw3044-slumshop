@@ -42,7 +42,7 @@ if (isset($_GET['pageno'])) {
 }
 
 if ($user_email !="guest@slumberjer.com"){
-    $stmtqty = $conn -> prepare("SELECT * FROM tbl_carts WHERE customer_email = '$user_email'");
+    $stmtqty = $conn -> prepare("SELECT * FROM tbl_carts WHERE customer_email = '$user_email' AND tbl_carts.cart_status IS NULL");
 	$stmtqty -> execute();
 	$resultqty = $stmtqty -> setFetchMode(PDO::FETCH_ASSOC);
 	$rowsqty = $stmtqty -> fetchAll();
