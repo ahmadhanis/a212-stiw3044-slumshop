@@ -27,7 +27,7 @@ $data = array(
           'amount' => ($amount + 1) * 100, // RM20
 		  'description' => 'Payment for order by '.$email,
           'callback_url' => "https://slumberjer.com/slumshop/user/php/return_url",
-          'redirect_url' => "https://slumberjer.com/slumshop/user/php/payment_update.php?email=$email&amount=$amount" 
+          'redirect_url' => "https://slumberjer.com/slumshop/user/php/payment_update.php?email=$email&mobile=$mobile&amount=$amount&name=$user_name" 
 );
 
 $process = curl_init($host );

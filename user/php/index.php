@@ -8,6 +8,7 @@ if (isset($_SESSION['sessionid'])) {
 }else{
     $user_email = "guest@slumberjer.com";
     $carttotal= 0;
+    $user_name = "Guest";
 }
 include_once("dbconnect.php");
 if (isset($_GET['submit'])) {
@@ -78,20 +79,28 @@ function truncate($string, $length, $dots = "...") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href = "../css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../js/menu.js" defer></script>
+     <script src="../js/login.js" defer></script>
     <link rel="stylesheet" href="../css/style.css">
     <title>Welcome to SlumShop</title>
 </head>
 
-<body style="max-width:1200px;margin:0 auto;">
-    <div class="w3-sidebar w3-bar-block" style="display:none" id="mySidebar">
+<body id="main" style="max-width:1200px;margin:0 auto;">
+    <div class="w3-sidebar w3-bar-block w3-border" style="display:none;" id="mySidebar">
         <button onclick="w3_close()" class="w3-bar-item w3-button w3-large">Close &times;</button>
+        <div class="w3-container w3-card w3-padding w3-margin w3-center" style="max-height:350px;max-width:350px">
+            <img class='w3-image' src='../../assets/customers/<?php echo $user_email?>.jpg' onerror=this.onerror=null;this.src='../../assets/customers/profile.png' style="max-height:200px;max-width:200px">
+           <p><?php echo $user_name?><br>
+           <?php echo $user_email?></p>
+        </div>
+        <hr>
         <a href="index.php" class="w3-bar-item w3-button">Products</a>
-        <a href="products.php" class="w3-bar-item w3-button">My Cart</a>
-        <a href="#" class="w3-bar-item w3-button">My Orders</a>
-        <a href="#" class="w3-bar-item w3-button">My Profile</a>
-        <a href="#" class="w3-bar-item w3-button">Logout</a>
+        <a href="mycart.php" class="w3-bar-item w3-button">My Cart</a>
+        <a href="myorder.php" class="w3-bar-item w3-button">My Orders</a>
+        <a href="myprofile.php" class="w3-bar-item w3-button">My Profile</a>
+        <a href="logout.php" class="w3-bar-item w3-button">Logout</a>
     </div>
 
     <div class="w3-yellow">
@@ -157,7 +166,7 @@ function truncate($string, $length, $dots = "...") {
             <header class='w3-container w3-blue'><h5><b>$prname</b></h5></header>";
             echo "<a href='productdetails.php?prid=$prid' style='text-decoration: none;'> <img class='w3-image' src=../../assets/products/$prid.jpg" .
                 " onerror=this.onerror=null;this.src='../../admin/res/newproduct.jpg'"
-                . " style='width:100%;height:250px'></a><hr>";
+                . " style='width:100%;height:200px'></a><hr>";
             echo "<div class='w3-container'><p>Type: $prtype<br>Price: RM $prprice<br>Quantity: $prqty<br><div class='w3-button w3-yellow w3-round w3-block' onClick='addCart($prid)'>Add to Cart</div></p></div>
             </div>";
             
@@ -216,5 +225,7 @@ function truncate($string, $length, $dots = "...") {
 		}
 	});
 }
+
+
 </script>
 </html>

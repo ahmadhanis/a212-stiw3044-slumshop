@@ -1,5 +1,5 @@
 function w3_open() {
-    document.getElementById("mySidebar").style.width = "100%";
+    document.getElementById("mySidebar").style.width = "70%";
     document.getElementById("mySidebar").style.display = "block";
 }
 

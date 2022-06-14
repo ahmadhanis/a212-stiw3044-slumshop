@@ -16,8 +16,10 @@ $data = array(
 $paidstatus = $_GET['billplz']['paid'];
 if ($paidstatus=="true"){
     $paidstatus = "Success";
+    $status = "Paid";
 }else{
     $paidstatus = "Failed";
+    $status = "Failed";
 }
 $receiptid = $_GET['billplz']['id'];
 $signing = '';
@@ -34,10 +36,10 @@ foreach ($data as $key => $value) {
 $signed= hash_hmac('sha256', $signing, 'S-wzNn8FTL0endIB4wgi728w');
 if ($signed === $data['x_signature']) {
     if ($paidstatus == "Success"){ //payment success
-        $sqlinsertpayment = "INSERT INTO `tbl_payments`( `customer_email`,`payment_bill`, `payment_paid`) VALUES ('$email','$receiptid','$amount')";
-        $sqpupdatecart = "UPDATE `tbl_carts` SET `cart_status`='paid',`payment_id`='$receiptid' WHERE customer_email='$email' AND cart_status IS NULL";
+        $sqlinsertpayment = "INSERT INTO `tbl_orders`( `customer_email`,`receipt_id`, `order_paid`,`order_status`) VALUES ('$email','$receiptid','$amount','$status')";
+        $sqpupdatecart = "UPDATE `tbl_carts` SET `cart_status`='paid',`receipt_id`='$receiptid' WHERE customer_email='$email' AND cart_status IS NULL";
         if ($conn->query($sqlinsertpayment) && $conn->query($sqpupdatecart)){
-            $sqlselectcart="SELECT * FROM tbl_carts WHERE payment_id = '$receiptid'";
+            $sqlselectcart="SELECT * FROM tbl_carts WHERE receipt_id = '$receiptid'";
             $result = $conn->query($sqlselectcart);
             if ($result->num_rows > 0) {
                 while ($rows = $result->fetch_assoc()) {

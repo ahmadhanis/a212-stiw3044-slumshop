@@ -73,26 +73,16 @@ function sendMail($email,$otp,$pass){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href = "../css/style.css">
     <script src="../js/menu.js"></script>
     <script src="../js/script.js"></script>
     <title>Welcome to SlumShop</title>
   </head>
   <body style="max-width:1200px;margin:0 auto;">
-    <!-- Sidebar -->
-    <div class="w3-sidebar w3-bar-block" style="display:none" id="mySidebar">
-      <button onclick="w3_close()" class="w3-bar-item w3-button w3-large">Close &times;</button>
-      <a href="index.php" class="w3-bar-item w3-button">Products</a>
-      <a href="products.php" class="w3-bar-item w3-button">My Cart</a>
-      <a href="#" class="w3-bar-item w3-button">My Orders</a>
-      <a href="#" class="w3-bar-item w3-button">My Profile</a>
-      <a href="#" class="w3-bar-item w3-button">Logout</a>
-    </div>
-    <div class="w3-yellow">
-      <button class="w3-button w3-yellow w3-xlarge" onclick="w3_open()">☰</button>
-      <div class="w3-container">
-        <h3>New Customer Account Registration</h3>
-      </div>
-    </div>
+    <header class="w3-header w3-yellow w3-center w3-padding-32">
+        <h3>SlumShop</h3>
+        <p>Your One stop Grocery Shopping</p>
+    </header>
     <div class="w3-bar w3-yellow">
       <a href="index.php" class="w3-bar-item w3-button w3-right">Back</a>
     </div>

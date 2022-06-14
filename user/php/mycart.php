@@ -33,27 +33,35 @@ $rows = $stmt->fetchAll();
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href = "../css/style.css">
     <script src="../js/menu.js" defer></script>
     <link rel="stylesheet" href="../css/style.css">
     <title>Welcome to SlumShop</title>
 </head>
 
 <body style="max-width:1200px;margin:0 auto;">
-    <div class="w3-sidebar w3-bar-block" style="display:none" id="mySidebar">
+    <div class="w3-sidebar w3-bar-block w3-border" style="display:none" id="mySidebar">
         <button onclick="w3_close()" class="w3-bar-item w3-button w3-large">Close &times;</button>
+                <div class="w3-container w3-card w3-padding w3-margin w3-center" style="max-height:350px;max-width:350px">
+            <img class='w3-image' src='../../assets/customers/<?php echo $user_email?>.jpg' onerror=this.onerror=null;this.src='../../assets/customers/profile.png' style="max-height:200px;max-width:200px">
+           <p><?php echo $user_name?><br>
+           <?php echo $user_email?></p>
+        </div>
+        <hr>
+
         <a href="index.php" class="w3-bar-item w3-button">Products</a>
         <a href="mycart.php" class="w3-bar-item w3-button">My Cart</a>
-        <a href="#" class="w3-bar-item w3-button">My Orders</a>
-        <a href="#" class="w3-bar-item w3-button">My Profile</a>
-        <a href="#" class="w3-bar-item w3-button">Logout</a>
+        <a href="myorder.php" class="w3-bar-item w3-button">My Orders</a>
+        <a href="myprofile.php" class="w3-bar-item w3-button">My Profile</a>
+        <a href="logout.php" class="w3-bar-item w3-button">Logout</a>
     </div>
 
     <div class="w3-yellow">
         <button class="w3-button w3-yellow w3-xlarge" onclick="w3_open()">☰</button>
         <div class="w3-container">
             <h3>My Cart</h3>
-            Welcome <label id="iduser"><?php echo $user_email ?></label>
-            <div id="idname" style="display: none;"><?php echo $user_name ?></div>
+            Welcome <label id="idname"><?php echo $user_name ?></label>
+            <div id="iduser" style="display: none;"><?php echo $user_email ?></div>
             <div id="idphone" style="display: none;"><?php echo $user_phone ?></div>
         </div>
     </div>
@@ -84,7 +92,7 @@ $rows = $stmt->fetchAll();
             <header class='w3-container w3-blue'><h5><b>$prname</b></h5></header>";
             echo "<a href='productdetails.php?prid=$prid' style='text-decoration: none;'> <img class='w3-image' src=../../assets/products/$prid.jpg" .
                 " onerror=this.onerror=null;this.src='../../admin/res/newproduct.jpg'"
-                . " style='width:100%;height:250px'></a><hr>";
+                . " style='width:100%;height:200px'></a><hr>";
                  echo "<div class='w3-container'><p>Price: RM $prpricesingle<br>Quantity: <label id='cartquan_$cartid'> $cartqty</label>/$prqty available<br><label id='totalid_$cartid'> Total Price: RM $price</label><br>
                    <div class='w3-center'><input type='button' class='w3-button w3-red' id='button_id' value='-' onClick='updateCart($cartid,\"remove\");'>
                     <label id='qtyid_$cartid'>$cartqty</label>
@@ -95,7 +103,7 @@ $rows = $stmt->fetchAll();
              }    
              $total_payable = number_format((float)$total_payable, 2, '.', '');
              $name = $user_name;
-             echo "</div><hr><div class='w3-container w3-padding w3-block'>Amount Payable: RM <label id='payableid'>$total_payable</label></div><br>";
+             echo "</div><hr><div class='w3-container w3-padding w3-block'><b style='font-size:24px'>Amount Payable: RM <label id='payableid'>$total_payable</b></label></div><br>";
              echo "</div><div class='w3-container w3-padding'><div class='w3-button w3-round w3-yellow w3-border' onClick='checkVal();'>Pay Now</div></div><br>";
          }else{
              echo "<div class='w3-container w3-padding'>Your cart is empty</div>";

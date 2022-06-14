@@ -46,6 +46,7 @@ function loadCookies() {
     }
 }
 
+
 function getCookie(cname) {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -74,3 +75,4 @@ function acceptCookieConsent() {
     setCookies('user_cookie_consent', 1, 30);
     document.getElementById("cookieNotice").style.display = "none";
 }
+

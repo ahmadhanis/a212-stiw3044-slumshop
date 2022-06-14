@@ -3,6 +3,10 @@
     grid-template-columns: repeat(5, 1fr);
 }
 
+body {
+  font-family: Garamond, serif;
+}
+
 hr {
     margin: 0em;
     border-width: 2px;

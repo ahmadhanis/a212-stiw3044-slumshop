@@ -10,6 +10,16 @@ $prid = $_POST['prid'];
 $useremail = $_POST['email'];
 $cartqty = "1";
 $carttotal = 0;
+
+$sqlcheckqty = "SELECT * FROM tbl_products where product_id = '$prid'";
+$resultqty = $conn->query($sqlcheckqty);
+$num_of_qty = $resultqty->num_rows;
+if ($num_of_qty>1){
+    $response = array('status' => 'failed', 'data' => null);
+	sendJsonResponse($response);
+	return;
+}
+
 $sqlinsert = "SELECT * FROM tbl_carts WHERE customer_email = '$useremail' AND product_id = '$prid' AND cart_status IS NULL";
 $result = $conn->query($sqlinsert);
 $number_of_result = $result->num_rows;
